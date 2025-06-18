@@ -1,0 +1,25 @@
+
+
+echo "============================="
+echo "Will execute command in jail : $@"
+echo "============================="
+
+nsjail \
+	-Mo \
+	-R /bin/ \
+	-R /lib \
+	-R /lib64/ \
+	-R /usr/ \
+	-R /sbin/ \
+	-R /dev/urandom \
+	-B /var/cache \
+	--bindmount=$PWD:/MAIN \
+	--cwd /MAIN \
+	--env PATH=/usr/local/bin:/usr/bin \
+	--disable_clone_newnet \
+	--iface_no_lo \
+	-- /bin/bash -c "$*"
+
+
+	# iface_no_lo
+	#-T /dev \
